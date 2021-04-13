@@ -1689,7 +1689,7 @@ mm_process_message_image_response(MattermostAccount *ma, JsonNode *node, gpointe
 
 	response_str = g_dataset_get_data(node, "raw_body");
 	response_len = json_object_get_int_member(response,"len");
-	response_dup = g_memdup(response_str, response_len);
+	response_dup = g_memdup2(response_str, response_len);
 
 	image = purple_image_new_from_data(response_dup,response_len);
 	image_id = purple_image_store_add(image);
@@ -4085,7 +4085,7 @@ mm_conversation_send_image(MattermostAccount *ma,const gchar *channel_id, Purple
 	gchar *url, *postdata;
 	const gchar *filename = purple_image_get_path(image);
 
-	postdata = g_memdup(purple_image_get_data(image),purple_image_get_size(image));
+	postdata = g_memdup2(purple_image_get_data(image),purple_image_get_size(image));
 
 	url = mm_build_url(ma,"/files?channel_id=%s&filename=%s",channel_id,filename);
 	mm_fetch_url(ma, url, MATTERMOST_HTTP_POST, postdata, purple_image_get_size(image), mm_coversation_send_image_response, g_strdup(channel_id));
@@ -4601,7 +4601,7 @@ mm_got_avatar(MattermostAccount *ma, JsonNode *node, gpointer user_data)
 
 		response_str = g_dataset_get_data(node, "raw_body");
 		response_len = json_object_get_int_member(response, "len");
-		response_dup = g_memdup(response_str, response_len);
+		response_dup = g_memdup2(response_str, response_len);
 
 		if(purple_blist_find_buddy(ma->account, buddy_name)) {
 			purple_buddy_icons_set_for_user(ma->account, buddy_name, response_dup, response_len, NULL);
