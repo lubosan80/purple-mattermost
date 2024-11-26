@@ -187,6 +187,7 @@ mm_build_url(MattermostAccount *ma, const gchar *url_format, ...)
 static gboolean
 mm_check_mattermost_response(MattermostAccount *ma, JsonNode *node, gchar *errtitle, gchar *errtext, gboolean show)
 {
+        if (node == NULL) return FALSE;
 	if (json_node_get_node_type(node) == JSON_NODE_OBJECT) {
 		JsonObject *response = json_node_get_object(node);
 		if (json_object_get_int_member(response, "status_code") >= 400) {
